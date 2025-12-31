@@ -32,9 +32,9 @@ export default function SearchBox({updateInfo}){
         console.log(err);
         throw err;
       }
-  
+
     };
-   
+
     let handleChange=(event)=>{
         setCity(event.target.value);
     };
@@ -50,7 +50,7 @@ export default function SearchBox({updateInfo}){
         console.log(err);
         setError(true);
       }
-       
+
     };
     return(
         <div className = "SearchBox">
@@ -64,7 +64,6 @@ export default function SearchBox({updateInfo}){
              onChange={handleChange}>
             </TextField>
             <br /> <br />
-           
             <Button variant="contained" type="submit">
                Search
              </Button>
