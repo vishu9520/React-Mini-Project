@@ -7,10 +7,12 @@ import WeatherApp from './WeatherApp';
 
 export default function SearchBox({updateInfo}){
      let [city,setCity] = useState("");
+     let [err,setError] = useState(false);
     const API_URL ="https://api.openweathermap.org/data/2.5/weather";
     const API_KEY = "1031e82180981b48e6b9fba105594774";
     let getWeatherInfo = async(city)=>{
-  
+      try{
+
       let response=  await fetch(`${API_URL}?q=${city}&appid=${API_KEY}&units=metric`);
       let jsonResponse =await response.json();
       console.log(jsonResponse);
@@ -25,17 +27,30 @@ export default function SearchBox({updateInfo}){
       };
       console.log(result);
       return result;
+      }
+      catch(err){
+        console.log(err);
+        throw err;
+      }
+  
     };
    
     let handleChange=(event)=>{
         setCity(event.target.value);
     };
     let handleSubmit= async(event)=>{
-        event.preventDefault();
+      try{
+ event.preventDefault();
         console.log(city);
         setCity("");
       let newInfo =await  getWeatherInfo(city);
       updateInfo(newInfo);
+      }
+      catch(err){
+        console.log(err);
+        setError(true);
+      }
+       
     };
     return(
         <div className = "SearchBox">
@@ -48,10 +63,12 @@ export default function SearchBox({updateInfo}){
              value={city}
              onChange={handleChange}>
             </TextField>
-            <br />
+            <br /> <br />
+           
             <Button variant="contained" type="submit">
                Search
              </Button>
+             {err &&<p  style={{color:"red"}}>No such place exists!</p>}
             </form>
         </div>
     );
