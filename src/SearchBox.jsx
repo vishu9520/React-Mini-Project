@@ -45,6 +45,7 @@ export default function SearchBox({updateInfo}){
         setCity("");
       let newInfo =await  getWeatherInfo(city);
       updateInfo(newInfo);
+      setError(false);
       }
       catch(err){
         console.log(err);
@@ -67,7 +68,7 @@ export default function SearchBox({updateInfo}){
             <Button variant="contained" type="submit">
                Search
              </Button>
-             {err &&<p  style={{color:"red"}}>No such place exists!</p>}
+             {err &&<p  style={{color:"red"}} {...handleSubmit}>No such place exists!  </p>}
             </form>
         </div>
     );
